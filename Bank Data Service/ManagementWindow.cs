@@ -10,8 +10,11 @@ using System.Windows.Forms;
 
 namespace Bank_Data_Service {
     public partial class ManagementWindow : Form {
+        public static DatabaseManager.AccountData Account;
         public ManagementWindow() {
             InitializeComponent();
+            MoneyText.Text = Account.balance.ToString("0.00 ");
+            MaxTransactionBalanceMoneyText.Text = Account.max_balance_transaction.ToString("0.00 ");
         }
     }
 }

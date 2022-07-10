@@ -20,13 +20,13 @@ namespace Bank_Data_Service {
         static void Main() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ManagementWindow());
-            /*
+            //Application.Run(new ManagementWindow());
+            
             Application.Run(new AuthWindow());
             
             if (ProgramState == CurrentState.Management)
                 Application.Run(new ManagementWindow());
-            */
+            
         }
     }
 }

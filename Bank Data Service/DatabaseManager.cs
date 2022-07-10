@@ -12,21 +12,25 @@ namespace Bank_Data_Service {
         private MySqlConnection SqlConnection = new MySqlConnection("host=localhost;user=root;password=;database=account;");
         private MySqlCommand SqlCommand;
 
-        public List<DatabaseData> Accounts;
+        public List<AccountData> Accounts;
 
         public DatabaseManager() {
             SqlConnection.Open();
-            Accounts = LoadDatabase();
+            Accounts = LoadAccountsData();
         }
 
-        private List<DatabaseData> LoadDatabase() {
+        private List<AccountData> LoadAccountsData() {
             try {
-                List<DatabaseData> database = new List<DatabaseData>();
+                List<AccountData> database = new List<AccountData>();
                 string sql = $" SELECT * FROM accounts";
                 SqlCommand = new MySqlCommand(sql, SqlConnection);
                 MySqlDataReader reader = SqlCommand.ExecuteReader();
                 while (reader.Read()) {
-                    DatabaseData Data = new DatabaseData(reader.GetString("login"), reader.GetString("password"), reader.GetString("pin"), reader.GetInt32("ballance"), reader.GetInt32("max_ballance_transaction"));
+                    AccountData Data = new AccountData(reader.GetString("login"), 
+                                                        reader.GetString("password"), 
+                                                        reader.GetString("pin"), 
+                                                        reader.GetFloat("balance"), 
+                                                        reader.GetInt32("max_balance_transaction"));
                     database.Add(Data);
                 }
                 reader.Close();
@@ -36,20 +40,54 @@ namespace Bank_Data_Service {
             }
         }
 
-        public struct DatabaseData {
-            public DatabaseData(string login, string password, string pin, int ballance, int max_ballance_transaction) {
+
+        /*
+         accounts table:
+        id: int(10), Auto Increment, Not Negative, Not Null
+        login: varchar(255)
+        password: varchar(255)
+        pin: varchar(4)
+        balance: float, default: 0
+        max_balance_transaction: int(10) Not Negative, default: 250
+         */
+
+        public struct AccountData {
+            public AccountData(string login, string password, string pin, float balance, int max_balance_transaction) {
                 this.login = login;
                 this.password = password;
                 this.pin = pin;
-                this.ballance = ballance;
-                this.max_ballance_transaction = max_ballance_transaction;
+                this.balance = balance;
+                this.max_balance_transaction = max_balance_transaction;
             }
 
             public string login;
             public string password;
             public string pin;
-            public int ballance;
-            public int max_ballance_transaction;
+            public float balance;
+            public int max_balance_transaction;
+        }
+
+
+        /*
+         transactions table:
+        transaction_id: int(10), Auto Increment, Not Negative, Not Null
+        sender_id: int(10), Not Negative
+        receiver_id: int(10), Not Negative
+        money_amount: float, Not Negative
+         */
+
+        public struct TransactionData {
+            public TransactionData(int transaction_id, int sender_id, int receiver_id, float money_amount) {
+                this.transaction_id = transaction_id;
+                this.sender_id = sender_id;
+                this.receiver_id = receiver_id;
+                this.money_amount = money_amount;
+            }
+
+            public int transaction_id;
+            public int sender_id;
+            public int receiver_id;
+            public float money_amount;
         }
     }
 }

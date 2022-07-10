@@ -25,12 +25,20 @@ namespace Bank_Data_Service {
             }
         }
 
+        private void ShowPin_CheckedChanged(object sender, EventArgs e) {
+            if (ShowPin.Checked) {
+                PinText.PasswordChar = '*';
+            } else {
+                PinText.PasswordChar = '\0';
+            }
+        }
+
         private void LoginButton_Click(object sender, EventArgs e) {
             string login = LoginText.Text;
             string password = PasswordText.Text;
             string pin = PinText.Text;
 
-            List<DatabaseManager.DatabaseData> Accounts = DatabaseManager.DBMInstance.Accounts;
+            List<DatabaseManager.AccountData> Accounts = DatabaseManager.DBMInstance.Accounts;
 
             for (int i = 0; i < Accounts.Count; i++) {
                 if (Accounts[i].login == login &&
@@ -38,6 +46,7 @@ namespace Bank_Data_Service {
                     Accounts[i].pin == pin) {
                     this.Close();
                     Program.ProgramState = Program.CurrentState.Management;
+                    ManagementWindow.Account = Accounts[i];
                     return;
                 } else {
                     if (i == Accounts.Count - 1)

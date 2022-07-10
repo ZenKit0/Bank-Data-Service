@@ -35,6 +35,7 @@ namespace Bank_Data_Service {
             this.LoginButton = new Guna.UI2.WinForms.Guna2GradientButton();
             this.PinText = new System.Windows.Forms.TextBox();
             this.PinLabel = new System.Windows.Forms.Label();
+            this.ShowPin = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.ExitButton)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +48,7 @@ namespace Bank_Data_Service {
             this.PasswordLabel.Location = new System.Drawing.Point(12, 84);
             this.PasswordLabel.Name = "PasswordLabel";
             this.PasswordLabel.Size = new System.Drawing.Size(42, 15);
-            this.PasswordLabel.TabIndex = 2;
+            this.PasswordLabel.TabIndex = 8;
             this.PasswordLabel.Text = "Hasło:";
             // 
             // LoginLabel
@@ -59,7 +60,7 @@ namespace Bank_Data_Service {
             this.LoginLabel.Location = new System.Drawing.Point(12, 25);
             this.LoginLabel.Name = "LoginLabel";
             this.LoginLabel.Size = new System.Drawing.Size(42, 15);
-            this.LoginLabel.TabIndex = 3;
+            this.LoginLabel.TabIndex = 7;
             this.LoginLabel.Text = "Login:";
             // 
             // PasswordText
@@ -71,7 +72,7 @@ namespace Bank_Data_Service {
             this.PasswordText.Name = "PasswordText";
             this.PasswordText.PasswordChar = '*';
             this.PasswordText.Size = new System.Drawing.Size(325, 16);
-            this.PasswordText.TabIndex = 5;
+            this.PasswordText.TabIndex = 4;
             // 
             // LoginText
             // 
@@ -81,7 +82,7 @@ namespace Bank_Data_Service {
             this.LoginText.Location = new System.Drawing.Point(12, 43);
             this.LoginText.Name = "LoginText";
             this.LoginText.Size = new System.Drawing.Size(325, 16);
-            this.LoginText.TabIndex = 6;
+            this.LoginText.TabIndex = 1;
             // 
             // ShowPasswd
             // 
@@ -89,10 +90,10 @@ namespace Bank_Data_Service {
             this.ShowPasswd.Checked = true;
             this.ShowPasswd.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ShowPasswd.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 9F, System.Drawing.FontStyle.Italic);
-            this.ShowPasswd.Location = new System.Drawing.Point(249, 80);
+            this.ShowPasswd.Location = new System.Drawing.Point(161, 80);
             this.ShowPasswd.Name = "ShowPasswd";
             this.ShowPasswd.Size = new System.Drawing.Size(88, 19);
-            this.ShowPasswd.TabIndex = 8;
+            this.ShowPasswd.TabIndex = 2;
             this.ShowPasswd.Text = "Ukryj hasło";
             this.ShowPasswd.UseVisualStyleBackColor = true;
             this.ShowPasswd.CheckedChanged += new System.EventHandler(this.ShowPasswd_CheckedChanged);
@@ -120,12 +121,15 @@ namespace Bank_Data_Service {
             this.LoginButton.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.LoginButton.DisabledState.FillColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
             this.LoginButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.LoginButton.FillColor = System.Drawing.Color.Aqua;
+            this.LoginButton.FillColor2 = System.Drawing.Color.Fuchsia;
+            this.LoginButton.FocusedColor = System.Drawing.Color.Transparent;
             this.LoginButton.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 9F, System.Drawing.FontStyle.Italic);
             this.LoginButton.ForeColor = System.Drawing.Color.White;
             this.LoginButton.Location = new System.Drawing.Point(24, 175);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(301, 27);
-            this.LoginButton.TabIndex = 10;
+            this.LoginButton.TabIndex = 6;
             this.LoginButton.Text = "Zaloguj";
             this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
@@ -138,7 +142,7 @@ namespace Bank_Data_Service {
             this.PinText.Name = "PinText";
             this.PinText.PasswordChar = '*';
             this.PinText.Size = new System.Drawing.Size(325, 16);
-            this.PinText.TabIndex = 12;
+            this.PinText.TabIndex = 5;
             // 
             // PinLabel
             // 
@@ -149,8 +153,22 @@ namespace Bank_Data_Service {
             this.PinLabel.Location = new System.Drawing.Point(12, 126);
             this.PinLabel.Name = "PinLabel";
             this.PinLabel.Size = new System.Drawing.Size(28, 15);
-            this.PinLabel.TabIndex = 11;
+            this.PinLabel.TabIndex = 9;
             this.PinLabel.Text = "Pin:";
+            // 
+            // ShowPin
+            // 
+            this.ShowPin.AutoSize = true;
+            this.ShowPin.Checked = true;
+            this.ShowPin.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ShowPin.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 9F, System.Drawing.FontStyle.Italic);
+            this.ShowPin.Location = new System.Drawing.Point(255, 80);
+            this.ShowPin.Name = "ShowPin";
+            this.ShowPin.Size = new System.Drawing.Size(75, 19);
+            this.ShowPin.TabIndex = 3;
+            this.ShowPin.Text = "Ukryj pin";
+            this.ShowPin.UseVisualStyleBackColor = true;
+            this.ShowPin.CheckedChanged += new System.EventHandler(this.ShowPin_CheckedChanged);
             // 
             // AuthWindow
             // 
@@ -158,6 +176,7 @@ namespace Bank_Data_Service {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(349, 221);
+            this.Controls.Add(this.ShowPin);
             this.Controls.Add(this.PinText);
             this.Controls.Add(this.PinLabel);
             this.Controls.Add(this.LoginButton);
@@ -188,5 +207,6 @@ namespace Bank_Data_Service {
         private Guna.UI2.WinForms.Guna2GradientButton LoginButton;
         private System.Windows.Forms.TextBox PinText;
         private System.Windows.Forms.Label PinLabel;
+        private System.Windows.Forms.CheckBox ShowPin;
     }
 }
