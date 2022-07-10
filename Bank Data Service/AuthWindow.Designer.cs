@@ -33,6 +33,8 @@ namespace Bank_Data_Service {
             this.bunifuElipse1 = new Bunifu.Framework.UI.BunifuElipse(this.components);
             this.ExitButton = new System.Windows.Forms.PictureBox();
             this.LoginButton = new Guna.UI2.WinForms.Guna2GradientButton();
+            this.PinText = new System.Windows.Forms.TextBox();
+            this.PinLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ExitButton)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,19 +122,44 @@ namespace Bank_Data_Service {
             this.LoginButton.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.LoginButton.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 9F, System.Drawing.FontStyle.Italic);
             this.LoginButton.ForeColor = System.Drawing.Color.White;
-            this.LoginButton.Location = new System.Drawing.Point(24, 147);
+            this.LoginButton.Location = new System.Drawing.Point(24, 175);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(301, 27);
             this.LoginButton.TabIndex = 10;
             this.LoginButton.Text = "Zaloguj";
             this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
+            // PinText
+            // 
+            this.PinText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.PinText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.PinText.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 9F, System.Drawing.FontStyle.Italic);
+            this.PinText.Location = new System.Drawing.Point(12, 143);
+            this.PinText.Name = "PinText";
+            this.PinText.PasswordChar = '*';
+            this.PinText.Size = new System.Drawing.Size(325, 16);
+            this.PinText.TabIndex = 12;
+            // 
+            // PinLabel
+            // 
+            this.PinLabel.AutoSize = true;
+            this.PinLabel.BackColor = System.Drawing.Color.White;
+            this.PinLabel.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PinLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(56)))), ((int)(((byte)(56)))));
+            this.PinLabel.Location = new System.Drawing.Point(12, 126);
+            this.PinLabel.Name = "PinLabel";
+            this.PinLabel.Size = new System.Drawing.Size(28, 15);
+            this.PinLabel.TabIndex = 11;
+            this.PinLabel.Text = "Pin:";
+            // 
             // AuthWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(349, 196);
+            this.ClientSize = new System.Drawing.Size(349, 221);
+            this.Controls.Add(this.PinText);
+            this.Controls.Add(this.PinLabel);
             this.Controls.Add(this.LoginButton);
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.ShowPasswd);
@@ -159,5 +186,7 @@ namespace Bank_Data_Service {
         private Bunifu.Framework.UI.BunifuElipse bunifuElipse1;
         private System.Windows.Forms.PictureBox ExitButton;
         private Guna.UI2.WinForms.Guna2GradientButton LoginButton;
+        private System.Windows.Forms.TextBox PinText;
+        private System.Windows.Forms.Label PinLabel;
     }
 }
