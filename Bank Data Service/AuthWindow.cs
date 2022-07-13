@@ -15,6 +15,16 @@ namespace Bank_Data_Service {
     public partial class AuthWindow : Form {
         public AuthWindow() {
             InitializeComponent();
+
+            CheckConnectionValidation();
+        }
+
+        private void CheckConnectionValidation() {
+            if (DatabaseManager.DBMInstance.IsOpenedConnection) 
+                return;
+
+            LoginButton.Enabled = false;
+            LoginButton.Text = "Nie można się zalogować";
         }
 
         private void ShowPasswd_CheckedChanged(object sender, EventArgs e) {
@@ -46,7 +56,8 @@ namespace Bank_Data_Service {
                     Accounts[i].pin == pin) {
                     this.Close();
                     Program.ProgramState = Program.CurrentState.Management;
-                    ManagementWindow.Account = Accounts[i];
+                    ManagementWindow.MngInstance.Account = Accounts[i];
+                    ManagementWindow.MngInstance.UpdateText();
                     return;
                 } else {
                     if (i == Accounts.Count - 1)

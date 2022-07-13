@@ -26,16 +26,17 @@ namespace Bank_Data_Service {
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             this.InformationPanel = new System.Windows.Forms.Panel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.AccountID = new System.Windows.Forms.TextBox();
             this.HistoryButton = new System.Windows.Forms.Button();
             this.ChangeMaxTransactionBalanceButton = new System.Windows.Forms.Button();
             this.MaxTransactionBalanceMoneyText = new System.Windows.Forms.TextBox();
             this.MaxTransactionBalanceMoneyType = new System.Windows.Forms.Label();
             this.VSeparator = new Guna.UI2.WinForms.Guna2VSeparator();
-            this.MaxTransactionBalance = new System.Windows.Forms.Label();
             this.MoneyText = new System.Windows.Forms.TextBox();
             this.MoneyType = new System.Windows.Forms.Label();
             this.TransferMoneyButton = new System.Windows.Forms.Button();
-            this.CurrentBalance = new System.Windows.Forms.Label();
             this.Tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.InformationPanel.SuspendLayout();
             this.SuspendLayout();
@@ -45,20 +46,65 @@ namespace Bank_Data_Service {
             this.InformationPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.InformationPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(50)))));
+            this.InformationPanel.Controls.Add(this.textBox2);
+            this.InformationPanel.Controls.Add(this.textBox1);
+            this.InformationPanel.Controls.Add(this.AccountID);
             this.InformationPanel.Controls.Add(this.HistoryButton);
             this.InformationPanel.Controls.Add(this.ChangeMaxTransactionBalanceButton);
             this.InformationPanel.Controls.Add(this.MaxTransactionBalanceMoneyText);
             this.InformationPanel.Controls.Add(this.MaxTransactionBalanceMoneyType);
             this.InformationPanel.Controls.Add(this.VSeparator);
-            this.InformationPanel.Controls.Add(this.MaxTransactionBalance);
             this.InformationPanel.Controls.Add(this.MoneyText);
             this.InformationPanel.Controls.Add(this.MoneyType);
             this.InformationPanel.Controls.Add(this.TransferMoneyButton);
-            this.InformationPanel.Controls.Add(this.CurrentBalance);
             this.InformationPanel.Location = new System.Drawing.Point(0, 0);
             this.InformationPanel.Name = "InformationPanel";
             this.InformationPanel.Size = new System.Drawing.Size(800, 179);
             this.InformationPanel.TabIndex = 0;
+            // 
+            // textBox2
+            // 
+            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(50)))));
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox2.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.ForeColor = System.Drawing.Color.White;
+            this.textBox2.Location = new System.Drawing.Point(605, 60);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(183, 19);
+            this.textBox2.TabIndex = 14;
+            this.textBox2.Text = "Dostępne środki:";
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(50)))));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.textBox1.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.White;
+            this.textBox1.Location = new System.Drawing.Point(72, 60);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(255, 19);
+            this.textBox1.TabIndex = 13;
+            this.textBox1.Text = "Maksymalna Wartość Transakcji:";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // AccountID
+            // 
+            this.AccountID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.AccountID.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(50)))));
+            this.AccountID.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.AccountID.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.AccountID.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 9.749999F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AccountID.ForeColor = System.Drawing.Color.White;
+            this.AccountID.Location = new System.Drawing.Point(349, 8);
+            this.AccountID.Name = "AccountID";
+            this.AccountID.Size = new System.Drawing.Size(161, 17);
+            this.AccountID.TabIndex = 12;
+            this.AccountID.Text = "00000000";
             // 
             // HistoryButton
             // 
@@ -72,6 +118,7 @@ namespace Bank_Data_Service {
             this.HistoryButton.Size = new System.Drawing.Size(131, 36);
             this.HistoryButton.TabIndex = 11;
             this.HistoryButton.Text = "Historia";
+            this.Tooltip.SetToolTip(this.HistoryButton, "Wyświetl historię wszystkich transakcji");
             this.HistoryButton.UseVisualStyleBackColor = false;
             // 
             // ChangeMaxTransactionBalanceButton
@@ -85,6 +132,7 @@ namespace Bank_Data_Service {
             this.ChangeMaxTransactionBalanceButton.Size = new System.Drawing.Size(131, 36);
             this.ChangeMaxTransactionBalanceButton.TabIndex = 10;
             this.ChangeMaxTransactionBalanceButton.Text = "Edytuj";
+            this.Tooltip.SetToolTip(this.ChangeMaxTransactionBalanceButton, "Zmień maksymalną wartość transakcji");
             this.ChangeMaxTransactionBalanceButton.UseVisualStyleBackColor = false;
             // 
             // MaxTransactionBalanceMoneyText
@@ -96,6 +144,7 @@ namespace Bank_Data_Service {
             this.MaxTransactionBalanceMoneyText.ForeColor = System.Drawing.Color.White;
             this.MaxTransactionBalanceMoneyText.Location = new System.Drawing.Point(61, 83);
             this.MaxTransactionBalanceMoneyText.Name = "MaxTransactionBalanceMoneyText";
+            this.MaxTransactionBalanceMoneyText.ReadOnly = true;
             this.MaxTransactionBalanceMoneyText.Size = new System.Drawing.Size(227, 49);
             this.MaxTransactionBalanceMoneyText.TabIndex = 9;
             this.MaxTransactionBalanceMoneyText.Text = "0.00 ";
@@ -119,18 +168,6 @@ namespace Bank_Data_Service {
             this.VSeparator.Size = new System.Drawing.Size(10, 153);
             this.VSeparator.TabIndex = 7;
             // 
-            // MaxTransactionBalance
-            // 
-            this.MaxTransactionBalance.AutoSize = true;
-            this.MaxTransactionBalance.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MaxTransactionBalance.ForeColor = System.Drawing.Color.White;
-            this.MaxTransactionBalance.Location = new System.Drawing.Point(84, 60);
-            this.MaxTransactionBalance.Name = "MaxTransactionBalance";
-            this.MaxTransactionBalance.Size = new System.Drawing.Size(243, 19);
-            this.MaxTransactionBalance.TabIndex = 5;
-            this.MaxTransactionBalance.Text = "Maksymalna Wartość Transakcji:";
-            this.Tooltip.SetToolTip(this.MaxTransactionBalance, "Maksymalna ilość pieniędzy możliwych do przesłania za pomocą jednej transakcji.");
-            // 
             // MoneyText
             // 
             this.MoneyText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -141,6 +178,7 @@ namespace Bank_Data_Service {
             this.MoneyText.ForeColor = System.Drawing.Color.White;
             this.MoneyText.Location = new System.Drawing.Point(349, 83);
             this.MoneyText.Name = "MoneyText";
+            this.MoneyText.ReadOnly = true;
             this.MoneyText.Size = new System.Drawing.Size(395, 49);
             this.MoneyText.TabIndex = 4;
             this.MoneyText.Text = "0.00 ";
@@ -170,19 +208,9 @@ namespace Bank_Data_Service {
             this.TransferMoneyButton.Size = new System.Drawing.Size(131, 36);
             this.TransferMoneyButton.TabIndex = 2;
             this.TransferMoneyButton.Text = "Przelew";
+            this.Tooltip.SetToolTip(this.TransferMoneyButton, "Wykonaj transakcję");
             this.TransferMoneyButton.UseVisualStyleBackColor = false;
-            // 
-            // CurrentBalance
-            // 
-            this.CurrentBalance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CurrentBalance.AutoSize = true;
-            this.CurrentBalance.Font = new System.Drawing.Font("ITC Avant Garde Std Bk", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CurrentBalance.ForeColor = System.Drawing.Color.White;
-            this.CurrentBalance.Location = new System.Drawing.Point(658, 60);
-            this.CurrentBalance.Name = "CurrentBalance";
-            this.CurrentBalance.Size = new System.Drawing.Size(130, 19);
-            this.CurrentBalance.TabIndex = 1;
-            this.CurrentBalance.Text = "Dostępne środki:";
+            this.TransferMoneyButton.Click += new System.EventHandler(this.TransferMoneyButton_Click);
             // 
             // ManagementWindow
             // 
@@ -192,7 +220,7 @@ namespace Bank_Data_Service {
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.InformationPanel);
             this.Name = "ManagementWindow";
-            this.Text = "ManagementWindow";
+            this.Text = "Usługa Danych Bankowości";
             this.InformationPanel.ResumeLayout(false);
             this.InformationPanel.PerformLayout();
             this.ResumeLayout(false);
@@ -202,16 +230,17 @@ namespace Bank_Data_Service {
         #endregion
 
         private System.Windows.Forms.Panel InformationPanel;
-        private System.Windows.Forms.Label CurrentBalance;
         private System.Windows.Forms.Button TransferMoneyButton;
         private System.Windows.Forms.Label MoneyType;
         private System.Windows.Forms.TextBox MoneyText;
-        private System.Windows.Forms.Label MaxTransactionBalance;
         private System.Windows.Forms.ToolTip Tooltip;
         private Guna.UI2.WinForms.Guna2VSeparator VSeparator;
         private System.Windows.Forms.TextBox MaxTransactionBalanceMoneyText;
         private System.Windows.Forms.Label MaxTransactionBalanceMoneyType;
         private System.Windows.Forms.Button HistoryButton;
         private System.Windows.Forms.Button ChangeMaxTransactionBalanceButton;
+        private System.Windows.Forms.TextBox AccountID;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
