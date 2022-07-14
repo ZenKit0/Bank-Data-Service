@@ -18,22 +18,26 @@ namespace Bank_Data_Service {
         private void TransferMoneyButton_Click(object sender, EventArgs e) {
             DatabaseManager.AccountData MngAcc = ManagementWindow.MngInstance.Account;
 
-            if (ReceiverID.Text == "" ||
-                ReceiverID.Text == MngAcc.login) {
+            int ParsedReceiverID = Int32.Parse(ReceiverID.Text);
+
+            if (string.IsNullOrEmpty(ReceiverID.Text) ||
+                ParsedReceiverID == MngAcc.login) {
                 MessageBox.Show("Podaj poprawny numer konta odbiorcy!");
                 return;
             }
 
             if (MoneyValue.Value == 0 || 
-                MoneyValue.Value > MngAcc.balance) {
+                MoneyValue.Value > MngAcc.balance ||
+                MoneyValue.Value > MngAcc.max_balance_transaction) {
                 MessageBox.Show("Podano niepoprawną wartość!");
                 return;
             }
 
             DatabaseManager.DBMInstance.TransferMoney(
-                Int32.Parse(MngAcc.login), 
-                Int32.Parse(ReceiverID.Text),
-                MoneyValue.Value);
+                MngAcc.login,
+                ParsedReceiverID,
+                MoneyValue.Value,
+                DateTime.Now);
 
             Hide();
         }

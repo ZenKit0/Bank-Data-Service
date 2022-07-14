@@ -44,7 +44,7 @@ namespace Bank_Data_Service {
         }
 
         private void LoginButton_Click(object sender, EventArgs e) {
-            string login = LoginText.Text;
+            int login = Int32.Parse(LoginText.Text);
             string password = PasswordText.Text;
             string pin = PinText.Text;
 

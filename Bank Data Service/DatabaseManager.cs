@@ -25,6 +25,7 @@ namespace Bank_Data_Service {
             Accounts = LoadAccountsData();
         }
 
+        #region Initialize
         private bool OpenConnection() {
             try {
                 SqlConnection.Open();
@@ -46,11 +47,7 @@ namespace Bank_Data_Service {
                     reader = cmd.ExecuteReader();
 
                     while (reader.Read()) {
-                        AccountData Data = new AccountData(reader.GetString("login"),
-                                                            reader.GetString("password"),
-                                                            reader.GetString("pin"),
-                                                            reader.GetDecimal("balance"),
-                                                            reader.GetInt32("max_balance_transaction"));
+                        AccountData Data = GetAccountData(reader);
                         database.Add(Data);
                     }
                     reader.Close();
@@ -71,13 +68,7 @@ namespace Bank_Data_Service {
                     reader = cmd.ExecuteReader();
 
                     if (reader.Read()) {
-                        acc = new AccountData() {
-                            login = reader.GetString("login"),
-                            password = reader.GetString("password"),
-                            pin = reader.GetString("pin"),
-                            balance = reader.GetDecimal("balance"),
-                            max_balance_transaction = reader.GetInt32("max_balance_transaction")
-                        };
+                        acc = GetAccountData(reader);
                     }
                     reader.Close();
                 }
@@ -90,57 +81,159 @@ namespace Bank_Data_Service {
                 return new AccountData();
             }
         }
+        #endregion
 
-        public void TransferMoney(int sender_id, int receiver_id, decimal money_amount) {
+        #region Transaction
+        public void TransferMoney(int sender_id, int receiver_id, decimal money_amount, DateTime date_time) {
+            string str_money_amount = Locale.ConverDecimalToSQLDecimal(money_amount);
+
             string sql;
             sql = $"UPDATE accounts " +
-                $"SET balance = balance - {money_amount} " +
+                $"SET balance = balance - {str_money_amount} " +
                 $"WHERE login = {sender_id};";
-
-            Debug.WriteLine(sql);
 
             using (MySqlCommand cmd = new MySqlCommand(sql, SqlConnection)) {
                 cmd.ExecuteNonQuery();
             }
 
             sql = $"UPDATE accounts " +
-                $"SET balance = balance + {money_amount} " +
+                $"SET balance = balance + {str_money_amount} " +
                 $"WHERE login = {receiver_id};";
 
             using (MySqlCommand cmd = new MySqlCommand(sql, SqlConnection)) {
                 cmd.ExecuteNonQuery();
             }
 
-
             MessageBox.Show("Poprawnie wykonano transakcje!");
 
-            CreateTransactionLog(sender_id, receiver_id, money_amount);
+            CreateTransactionLog(sender_id, receiver_id, money_amount, date_time);
             ManagementWindow.MngInstance.Account = ReadAccountInformations(sender_id);
             ManagementWindow.MngInstance.UpdateText();
         }
+        
+        public void CreateTransactionLog(int sender_id, int receiver_id, decimal money_amount, DateTime date_time) {
+            string str_money_amount = Locale.ConverDecimalToSQLDecimal(money_amount);
 
-        public void CreateTransactionLog(int sender_id, int receiver_id, decimal money_amount) {
-            string sql = $" INSERT INTO transactions (sender_id, receiver_id, money_amount)" +
-                $"VALUES ({sender_id}, {receiver_id}, {money_amount});";
+            string sql = $" INSERT INTO transactions (sender_id, receiver_id, money_amount, date_time) " +
+                $"VALUES ({sender_id}, {receiver_id}, {str_money_amount}, '{Locale.ConvertDateTimeToSQLDateTime(date_time)}');";
 
             using (MySqlCommand cmd = new MySqlCommand(sql, SqlConnection)) {
                 cmd.ExecuteNonQuery();
             }
         }
 
+        public List<TransactionData> GetTransactionsLogs(int sender_id) {
+            List<TransactionData> tmp = new List<TransactionData>();
+
+            string sql = $" SELECT * FROM transactions WHERE sender_id = {sender_id}";
+            using (MySqlCommand cmd = new MySqlCommand(sql, SqlConnection)) {
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read()) {
+                    TransactionData Data = GetTransactionData(reader);
+                    tmp.Add(Data);
+                }
+                reader.Close();
+            }
+
+            return tmp;
+        }
+        #endregion
+
+        #region Change Max Balance Transaction
+        public void ChangeMaxTransactionBalance(int sender_id, decimal money_amount, DateTime date_time) {
+            string str_money_amount = Locale.ConverDecimalToSQLDecimal(money_amount);
+
+            string sql;
+            sql = $"UPDATE accounts " +
+                $"SET max_balance_transaction = {str_money_amount} " +
+                $"WHERE login = {sender_id};";
+            Debug.WriteLine(sql);
+            using (MySqlCommand cmd = new MySqlCommand(sql, SqlConnection)) {
+                cmd.ExecuteNonQuery();
+            }
+
+            MessageBox.Show("Poprawnie wykonano zmianę!");
+
+            CreateChangeMaxBalanceTransactionLog(sender_id, money_amount, date_time);
+            ManagementWindow.MngInstance.Account = ReadAccountInformations(sender_id);
+            ManagementWindow.MngInstance.UpdateText();
+        }
+
+        public void CreateChangeMaxBalanceTransactionLog(int sender_id, decimal money_amount, DateTime date_time) {
+            string str_money_amount = Locale.ConverDecimalToSQLDecimal(money_amount);
+
+            string sql = $" INSERT INTO changes_max_balance_transaction (sender_id, money_amount, date_time) " +
+                $"VALUES ({sender_id}, {str_money_amount}, '{Locale.ConvertDateTimeToSQLDateTime(date_time)}');";
+
+            Debug.WriteLine(sql);
+
+            using (MySqlCommand cmd = new MySqlCommand(sql, SqlConnection)) {
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public List<ChangeMaxBalanceTransactionData> GetChangesLogs(int sender_id) {
+            List<ChangeMaxBalanceTransactionData> tmp = new List<ChangeMaxBalanceTransactionData>();
+
+            string sql = $" SELECT * FROM changes_max_balance_transaction WHERE sender_id = {sender_id}";
+            using (MySqlCommand cmd = new MySqlCommand(sql, SqlConnection)) {
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read()) {
+                    ChangeMaxBalanceTransactionData Data = GetChangeMaxBalanceTransactionData(reader);
+                    tmp.Add(Data);
+                }
+                reader.Close();
+            }
+
+            return tmp;
+        }
+        #endregion
+
+        #region Data
+        private AccountData GetAccountData(MySqlDataReader reader) {
+            AccountData tmp = new AccountData(reader.GetInt32("login"),
+                            reader.GetString("password"),
+                            reader.GetString("pin"),
+                            reader.GetDecimal("balance"),
+                            reader.GetDecimal("max_balance_transaction"));
+
+            return tmp;
+        }
+
+        private TransactionData GetTransactionData(MySqlDataReader reader) {
+            TransactionData tmp = new TransactionData(reader.GetInt32("transaction_id"),
+                            reader.GetInt32("sender_id"),
+                            reader.GetInt32("receiver_id"),
+                            reader.GetDecimal("money_amount"),
+                            reader.GetDateTime("date_time"));
+
+            return tmp;
+        }
+
+        private ChangeMaxBalanceTransactionData GetChangeMaxBalanceTransactionData(MySqlDataReader reader) {
+            ChangeMaxBalanceTransactionData tmp = new ChangeMaxBalanceTransactionData(reader.GetInt32("transaction_id"),
+                                reader.GetInt32("sender_id"),
+                                reader.GetDecimal("money_amount"),
+                                reader.GetDateTime("date_time"));
+
+            return tmp;
+        }
+
 
         /*
          accounts table:
         id: int(10), Auto Increment, Not Negative, Not Null
-        login: varchar(255)
+        login: int(10), Not Negative
         password: varchar(255)
         pin: varchar(4)
         balance: decimal(10), After Comma: 2, default: 0
-        max_balance_transaction: int(10) Not Negative, default: 250
+        max_balance_transaction: decimal(10), After Comma: 2, Not Negative, default: 250.00
          */
 
         public struct AccountData {
-            public AccountData(string login, string password, string pin, decimal balance, int max_balance_transaction) {
+            public AccountData(int login, string password, string pin, decimal balance, decimal max_balance_transaction) {
                 this.login = login;
                 this.password = password;
                 this.pin = pin;
@@ -148,11 +241,11 @@ namespace Bank_Data_Service {
                 this.max_balance_transaction = max_balance_transaction;
             }
 
-            public string login;
+            public int login;
             public string password;
             public string pin;
             public decimal balance;
-            public int max_balance_transaction;
+            public decimal max_balance_transaction;
         }
 
 
@@ -162,20 +255,47 @@ namespace Bank_Data_Service {
         sender_id: int(10), Not Negative
         receiver_id: int(10), Not Negative
         money_amount: decimal(10), After Comma: 2, Not Negative
+        date_time: datetime
          */
 
         public struct TransactionData {
-            public TransactionData(int transaction_id, int sender_id, int receiver_id, decimal money_amount) {
+            public TransactionData(int transaction_id, int sender_id, int receiver_id, decimal money_amount, DateTime date_time) {
                 this.transaction_id = transaction_id;
                 this.sender_id = sender_id;
                 this.receiver_id = receiver_id;
                 this.money_amount = money_amount;
+                this.date_time = date_time;
             }
 
             public int transaction_id;
             public int sender_id;
             public int receiver_id;
             public decimal money_amount;
+            public DateTime date_time;
         }
+
+
+        /*
+         changes_max_balance_transaction table:
+        transaction_id: int(10), Auto Increment, Not Negative, Not Null
+        sender_id: int(10), Not Negative
+        money_amount: decimal(10), After Comma: 2, Not Negative
+        date_time: datetime
+         */
+
+        public struct ChangeMaxBalanceTransactionData {
+            public ChangeMaxBalanceTransactionData(int transaction_id, int sender_id, decimal money_amount, DateTime date_time) {
+                this.transaction_id = transaction_id;
+                this.sender_id = sender_id;
+                this.money_amount = money_amount;
+                this.date_time = date_time;
+            }
+
+            public int transaction_id;
+            public int sender_id;
+            public decimal money_amount;
+            public DateTime date_time;
+        }
+        #endregion
     }
 }

@@ -26,18 +26,45 @@ namespace Bank_Data_Service {
             dialog.Show();
         }
 
+        private void ChangeMaxTransactionBalanceButton_Click(object sender, EventArgs e) {
+            ChangeMaxBalanceTransactionDialog dialog = new ChangeMaxBalanceTransactionDialog();
+            dialog.Show();
+        }
+
         public void UpdateText() {
             MoneyText.Text = Account.balance.ToString("0.00 ");
             MoneyText.Invalidate();
             MoneyText.Update();
 
-            MaxTransactionBalanceMoneyText.Text = Account.max_balance_transaction.ToString("0 ");
-            MaxTransactionBalanceMoneyText.Invalidate();
-            MaxTransactionBalanceMoneyText.Update();
+            MaxBalanceTransactionMoneyText.Text = Account.max_balance_transaction.ToString("0.00 ");
+            MaxBalanceTransactionMoneyText.Invalidate();
+            MaxBalanceTransactionMoneyText.Update();
 
-            AccountID.Text = Account.login;
+            AccountID.Text = Account.login.ToString();
             AccountID.Invalidate();
             AccountID.Update();
+
+            
+        }
+
+        private void TransactionHistoryButton_Click(object sender, EventArgs e) {
+            HistoryList.Items.Clear();
+            foreach (DatabaseManager.TransactionData item in DatabaseManager.DBMInstance.GetTransactionsLogs(Account.login)) {
+                HistoryList.Items.Add(Locale.ConvertTransactionDataToTransactionLog(item));
+                HistoryList.Items.Add("--------------------------------------------------------------------");
+            }
+        }
+
+        private void ChangesButton_Click(object sender, EventArgs e) {
+            HistoryList.Items.Clear();
+            foreach (DatabaseManager.ChangeMaxBalanceTransactionData item in DatabaseManager.DBMInstance.GetChangesLogs(Account.login)) {
+                HistoryList.Items.Add(Locale.ConvertChangesDataToChangesLog(item));
+                HistoryList.Items.Add("--------------------------------------------------------------------");
+            }
+        }
+
+        private void RefreshButton_Click(object sender, EventArgs e) {
+            UpdateText();
         }
     }
 }

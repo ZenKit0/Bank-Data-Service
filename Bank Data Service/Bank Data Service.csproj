@@ -206,12 +206,19 @@
       <DependentUpon>AuthWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseManager.cs" />
+    <Compile Include="Dialogs\ChangeMaxBalanceTransactionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ChangeMaxBalanceTransactionDialog.Designer.cs">
+      <DependentUpon>ChangeMaxBalanceTransactionDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\TransferMoneyDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\TransferMoneyDialog.Designer.cs">
       <DependentUpon>TransferMoneyDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Locale.cs" />
     <Compile Include="ManagementWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +229,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AuthWindow.resx">
       <DependentUpon>AuthWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ChangeMaxBalanceTransactionDialog.resx">
+      <DependentUpon>ChangeMaxBalanceTransactionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\TransferMoneyDialog.resx">
       <DependentUpon>TransferMoneyDialog.cs</DependentUpon>
